@@ -6,8 +6,16 @@ export default class Toggle extends Component {
     on: true
   }
 
-  toggle = () =>
-    this.setState(({on}) => ({on: !on}))
+  static defaultProps = {
+    onChange: () => {}
+  }
+
+  toggle = () => {
+    this.setState(
+      ({on}) => ({on: !on}),
+      () => this.props.onChange(this.state.on)
+    )
+  }
 
   render() {
     const { on } = this.state
