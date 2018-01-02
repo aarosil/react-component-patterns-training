@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Toggle from './components/Toggle/Toggle';
 
 class App extends Component {
   render() {
     return (
-      <div>
-      hi
+      <div className='App'>
+
+        <Toggle />
+
       </div>
     );
   }
