@@ -9,6 +9,8 @@ const MyToggle = ({on, toggle}) =>
     </button>
   </div>
 
+const WrappedMyToggle = withToggle(MyToggle)
+
 class App extends Component {
   state = {on: true}
   render() {
@@ -20,7 +22,7 @@ class App extends Component {
             <div>
               <Toggle.OnText>the Toggle is on</Toggle.OnText>
               <Toggle.OffText>the Toggle is off</Toggle.OffText>
-              <MyToggle />
+              <WrappedMyToggle />
             </div>
         </Toggle>
       </div>
