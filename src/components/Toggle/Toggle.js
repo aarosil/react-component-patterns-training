@@ -4,22 +4,24 @@ import Switch from 'react-switch'
 
 const TOGGLE_CONTEXT = '__v3_toggle__'
 
-const ToggleOnText = ({children}, {[TOGGLE_CONTEXT]: on}) => on ? children : null
-ToggleOnText.contextTypes = {
-  [TOGGLE_CONTEXT]: PropTypes.object.isRequired
+export const withToggle = (Component) => {
+  function Wrapped(props, context) {
+    const toggleProps = context[TOGGLE_CONTEXT]
+
+    return <Component {...toggleProps} {...props} />
+  }
+
+  Wrapped.contextTypes = {
+    [TOGGLE_CONTEXT]: PropTypes.object.isRequired
+  }
+
+  return Wrapped
 }
 
-const ToggleOffText = ({children}, {[TOGGLE_CONTEXT]: on}) => on ? null : children
-ToggleOffText.contextTypes = {
-  [TOGGLE_CONTEXT]: PropTypes.object.isRequired
-}
-
-const ToggleButton = (props, {[TOGGLE_CONTEXT]: {toggle, on}}) =>
+const ToggleOnText = ({children, on}) => on ? children : null
+const ToggleOffText = ({children, on}) => on ? null : children
+const ToggleButton = ({toggle, on}) =>
   <Switch checked={on} onChange={toggle} />
-ToggleButton.contextTypes = {
-  [TOGGLE_CONTEXT]: PropTypes.object.isRequired
-}
-
 
 export default class Toggle extends Component {
   state = {
@@ -43,9 +45,9 @@ export default class Toggle extends Component {
     }
   }
 
-  static OnText = ToggleOnText
-  static OffText = ToggleOffText
-  static Button = ToggleButton
+  static OnText = withToggle(ToggleOnText)
+  static OffText = withToggle(ToggleOffText)
+  static Button = withToggle(ToggleButton)
 
   toggle = () => {
     this.setState(
