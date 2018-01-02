@@ -8,11 +8,16 @@ class App extends Component {
     return (
       <div className='App'>
 
-        <Toggle onChange={on => this.setState({on})}/>
+        <Toggle onChange={on => this.setState({on})}>
+          <Toggle.Button />
+          <Toggle.OnText>the Toggle is on</Toggle.OnText>
+          <Toggle.OffText>the Toggle is off</Toggle.OffText>
+        </Toggle>
         {
-          this.state.on
-            ? 'the Toggle is on'
-            : 'the Toggle is off'
+          this.state.on &&
+            <div>
+              <button>Yay!</button>
+            </div>
         }
       </div>
     );

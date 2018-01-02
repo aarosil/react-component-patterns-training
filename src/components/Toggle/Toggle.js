@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import Switch from 'react-switch'
 
+const ToggleOnText = ({on, children}) => on ? children : null
+const ToggleOffText = ({on, children}) => on ? null : children
+const ToggleButton = ({on, toggle}) =>
+  <Switch checked={on} onChange={toggle} />
+
 export default class Toggle extends Component {
   state = {
     on: true
@@ -10,6 +15,10 @@ export default class Toggle extends Component {
     onChange: () => {}
   }
 
+  static OnText = ToggleOnText
+  static OffText = ToggleOffText
+  static Button = ToggleButton
+
   toggle = () => {
     this.setState(
       ({on}) => ({on: !on}),
@@ -18,10 +27,11 @@ export default class Toggle extends Component {
   }
 
   render() {
-    const { on } = this.state
-
-    return <Switch
-            checked={on}
-            onChange={this.toggle} />
+    return React.Children.map(this.props.children, child =>
+      React.cloneElement(child, {
+        on: this.state.on,
+        toggle: this.toggle
+      })
+    )
   }
 }
