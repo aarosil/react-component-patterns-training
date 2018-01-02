@@ -18,6 +18,7 @@ export const withToggle = (Component) => {
   }
 
   Wrapped.displayName = `withToggle(${Component.displayName || Component.name})`
+  Wrapped.WrappedComponent = Component
 
   return hoistNonReactStatics(Wrapped, Component)
 }
