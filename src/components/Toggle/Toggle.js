@@ -8,8 +8,9 @@ const TOGGLE_CONTEXT = '__v3_toggle__'
 export const withToggle = (Component) => {
   function Wrapped(props, context) {
     const toggleProps = context[TOGGLE_CONTEXT]
+    const { innerRef, ...rest } = props
 
-    return <Component {...toggleProps} {...props} />
+    return <Component ref={innerRef} {...toggleProps} {...rest} />
   }
 
   Wrapped.contextTypes = {

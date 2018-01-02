@@ -5,16 +5,22 @@ import MyToggle from './components/MyToggle';
 
 class App extends Component {
   state = {on: true}
+
+  handleChange = (on) => {
+    this.setState({on})
+    if (!on) this.toggle.focus()
+  }
+
   render() {
     return (
       <div className='App'>
 
-        <Toggle onChange={on => this.setState({on})}>
+        <Toggle onChange={this.handleChange}>
           <Toggle.Button />
           <div>
             <Toggle.OnText>the Toggle is on</Toggle.OnText>
             <Toggle.OffText>the Toggle is off</Toggle.OffText>
-            <MyToggle />
+            <MyToggle innerRef={el => this.toggle = el} />
           </div>
           {
             !this.state.on &&
