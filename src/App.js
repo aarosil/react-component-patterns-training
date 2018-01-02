@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
-import Toggle from './components/Toggle/Toggle';
+import Toggle, { withToggle } from './components/Toggle/Toggle';
+
+const MyToggle = ({on, toggle}) =>
+  <div>
+    <button onClick={toggle}>
+      {on ? 'on' : 'off'}
+    </button>
+  </div>
 
 class App extends Component {
   state = {on: true}
@@ -13,14 +20,9 @@ class App extends Component {
             <div>
               <Toggle.OnText>the Toggle is on</Toggle.OnText>
               <Toggle.OffText>the Toggle is off</Toggle.OffText>
+              <MyToggle />
             </div>
         </Toggle>
-        {
-          this.state.on &&
-            <div>
-              <button>Yay!</button>
-            </div>
-        }
       </div>
     );
   }
