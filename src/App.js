@@ -10,8 +10,10 @@ class App extends Component {
 
         <Toggle onChange={on => this.setState({on})}>
           <Toggle.Button />
-          <Toggle.OnText>the Toggle is on</Toggle.OnText>
-          <Toggle.OffText>the Toggle is off</Toggle.OffText>
+            <div>
+              <Toggle.OnText>the Toggle is on</Toggle.OnText>
+              <Toggle.OffText>the Toggle is off</Toggle.OffText>
+            </div>
         </Toggle>
         {
           this.state.on &&
