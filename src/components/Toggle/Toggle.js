@@ -14,15 +14,21 @@ export default class Toggle extends Component {
   }
 
   toggle = () => {
-    this.setState(
-      ({on}) => ({on: !on}),
-      () => this.props.onChange(this.state.on)
-    )
+    if (this.isOnControlled()) {
+      this.props.onChange(!this.props.on)
+    } else {
+      this.setState(
+        ({on}) => ({on: !on}),
+        () => this.props.onChange(this.state.on)
+      )
+    }
   }
 
   render() {
     return this.props.render({
-      on: this.state.on,
+      on: this.isOnControlled()
+        ? this.props.on
+        : this.state.on,
       toggle: this.toggle
     })
   }
