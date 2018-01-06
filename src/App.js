@@ -5,8 +5,14 @@ import MyToggle from './components/MyToggle';
 import Switch from 'react-switch'
 
 class App extends Component {
+  state = {on: false, clicks: 0}
+
   handleChange = (on) => {
     if (!on) this.toggle.focus()
+    this.setState(({clicks, on}) => ({
+      on: clicks < 4 ? !on : false,
+      clicks: ++clicks
+    }))
   }
 
   render() {
@@ -14,6 +20,7 @@ class App extends Component {
       <div className='App'>
 
         <Toggle
+            on={this.state.on}
             onChange={this.handleChange}
             render={({on, toggle}) => (
               <div>
@@ -27,6 +34,13 @@ class App extends Component {
                 {
                   on &&
                     <MyToggle.Subtext />
+                }
+                {
+                  this.state.clicks > 4 &&
+                    <div>
+                      <div>max clicks exceeded</div>
+                      <button onClick={() => this.setState({clicks: 0})}>reset</button>
+                    </div>
                 }
               </div>
             )}>
