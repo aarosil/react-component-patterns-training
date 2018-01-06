@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import Toggle from './components/Toggle/Toggle';
 import MyToggle from './components/MyToggle';
+import Switch from 'react-switch'
 
 class App extends Component {
-  state = {on: true}
-
   handleChange = (on) => {
-    this.setState({on})
     if (!on) this.toggle.focus()
   }
 
@@ -15,17 +13,23 @@ class App extends Component {
     return (
       <div className='App'>
 
-        <Toggle onChange={this.handleChange}>
-          <Toggle.Button />
-          <div>
-            <Toggle.OnText>the Toggle is on</Toggle.OnText>
-            <Toggle.OffText>the Toggle is off</Toggle.OffText>
-            <MyToggle innerRef={el => this.toggle = el} />
-          </div>
-          {
-            !this.state.on &&
-              <MyToggle.Subtext />
-          }
+        <Toggle
+            onChange={this.handleChange}
+            render={({on, toggle}) => (
+              <div>
+                <Switch checked={on} onChange={toggle} />
+                {
+                  on
+                    ? 'the Toggle is on'
+                    : 'the Toggle is off'
+                }
+                <MyToggle toggle={toggle} on={on} ref={el => this.toggle = el} />
+                {
+                  on &&
+                    <MyToggle.Subtext />
+                }
+              </div>
+            )}>
         </Toggle>
       </div>
     );

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { withToggle } from './Toggle/Toggle';
 
-class MyToggle extends Component {
+export default class MyToggle extends Component {
   focus = () => this.button.focus()
 
   render() {
@@ -20,5 +19,3 @@ class MyToggle extends Component {
 
 MyToggle.Subtext = () =>
   <span>nooooo</span>
-
-export default withToggle(MyToggle)
