@@ -1,0 +1,15 @@
+.Nav {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+  border-bottom: 1px solid #aaaaaa;
+  background: #eeeeee;
+}
+
+.Nav-item {
+  margin-right: 10px;
+}
+
+.Nav-item a {
+  cursor: pointer;
+}

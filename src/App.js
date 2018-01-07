@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
-import './App.css';
-import Toggle from './components/Toggle/Toggle';
-import MyToggle from './components/MyToggle';
-import Switch from 'react-switch'
+import './App.css'
+import ToggleProvider from './components/Toggle/ToggleProvider'
+import Nav from './components/Nav'
+import Layout from './components/Layout'
 
 class App extends Component {
-  state = {on: true, clicks: 0}
+  state = {on: false, clicks: 0, page: 'basic'}
 
   handleChange = (on) => {
-    if (!on) this.toggle.focus()
-    this.setState(({clicks, on}) => ({
+    if (!on && this.toggle) this.toggle.focus()
+    this.setState(({clicks, on, counter}) => ({
       on: clicks < 4 ? !on : false,
       clicks: ++clicks
     }))
+  }
+
+  handleNav = (page) => {
+    this.setState({page})
   }
 
   handleReset = (on) => {
@@ -20,37 +24,18 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div className='App'>
+    const { on, clicks, page } = this.state
 
-        <Toggle
-            on={this.state.on}
-            onChange={this.handleChange}
-            onReset={this.handleReset}
-            render={({on, toggle,reset}) => (
-              <div>
-                <Switch checked={on} onChange={toggle} />
-                {
-                  on
-                    ? 'the Toggle is on'
-                    : 'the Toggle is off'
-                }
-                <MyToggle toggle={toggle} on={on} ref={el => this.toggle = el} />
-                {
-                  on &&
-                    <MyToggle.Subtext />
-                }
-                {
-                  this.state.clicks > 4 &&
-                    <div>
-                      <div>max clicks exceeded</div>
-                      <button onClick={reset}>reset</button>
-                    </div>
-                }
-              </div>
-            )}>
-        </Toggle>
-      </div>
+    return (
+      <ToggleProvider
+          on={on}
+          onChange={this.handleChange}
+          onReset={this.handleReset}>
+        <div className={on ? 'App-on' : ''}>
+          <Nav onChange={this.handleNav}  />
+          <Layout page={page} clicks={clicks} innerRef={el => this.toggle = el} />
+        </div>
+      </ToggleProvider>
     );
   }
 }

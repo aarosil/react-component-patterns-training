@@ -1,5 +1,3 @@
-.App {
-  display: flex;
-  flex-direction: column;
-  padding: 1em;
+.App-on {
+  color: magenta;
 }
