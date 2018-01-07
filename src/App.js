@@ -5,7 +5,7 @@ import MyToggle from './components/MyToggle';
 import Switch from 'react-switch'
 
 class App extends Component {
-  state = {on: false, clicks: 0}
+  state = {on: true, clicks: 0}
 
   handleChange = (on) => {
     if (!on) this.toggle.focus()
@@ -15,6 +15,10 @@ class App extends Component {
     }))
   }
 
+  handleReset = (on) => {
+    this.setState({clicks: 0, on})
+  }
+
   render() {
     return (
       <div className='App'>
@@ -22,7 +26,8 @@ class App extends Component {
         <Toggle
             on={this.state.on}
             onChange={this.handleChange}
-            render={({on, toggle}) => (
+            onReset={this.handleReset}
+            render={({on, toggle,reset}) => (
               <div>
                 <Switch checked={on} onChange={toggle} />
                 {
@@ -39,7 +44,7 @@ class App extends Component {
                   this.state.clicks > 4 &&
                     <div>
                       <div>max clicks exceeded</div>
-                      <button onClick={() => this.setState({clicks: 0})}>reset</button>
+                      <button onClick={reset}>reset</button>
                     </div>
                 }
               </div>

@@ -1,12 +1,15 @@
 import { Component } from 'react'
 
 export default class Toggle extends Component {
-  state = {
-    on: true
+  initialState = {
+    on: this.isOnControlled() ? this.props.on : !!this.props.defaultOn
   }
 
+  state = this.initialState
+
   static defaultProps = {
-    onChange: () => {}
+    onChange: () => {},
+    onReset: () => {}
   }
 
   isOnControlled() {
@@ -24,12 +27,16 @@ export default class Toggle extends Component {
     }
   }
 
+  reset = () =>
+    this.setState(this.initialState, () => this.props.onReset(this.state.on))
+
   render() {
     return this.props.render({
       on: this.isOnControlled()
         ? this.props.on
         : this.state.on,
-      toggle: this.toggle
+      toggle: this.toggle,
+      reset: this.reset
     })
   }
 }
