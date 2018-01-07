@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Toggle from './Toggle';
+import hoistNonReactStatics from 'hoist-non-react-statics'
 
 export default class ToggleProvider extends Component {
   contextKey = '__v3_toggle'
@@ -50,3 +51,21 @@ export function ConnectedToggle(props, context) {
 ConnectedToggle.contextTypes = {
   [ConnectedToggle.contextKey]: PropTypes.object.isRequired
 }
+
+export function withToggle(Component) {
+  function Wrapped(props, context) {
+    return <ConnectedToggle
+              render={toggleProps => (
+                <Component
+                  {...props}
+                  {...toggleProps} />
+              )}
+            />
+  }
+
+  Wrapped.displayName = `withToggle(${Component.displayName || Component.name})`
+  Wrapped.WrappedComponent = Component
+
+  return hoistNonReactStatics(Wrapped, Component)
+}
+
